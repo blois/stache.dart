@@ -35,7 +35,8 @@ Documentation
 
 The templating allows operation with
 [Safe-DOM](https://github.com/blois/safe-dom) NodeValidators to allow control
-over what contents are allowed where.
+over what contents are allowed and where. The sanitization can be customized 
+by explicitly providing a node validator:
 
 ```dart
   import 'package:safe_dom/validators.dart';
