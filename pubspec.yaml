@@ -1,0 +1,13 @@
+name: dom_mustache
+author: "Dart Team <misc@dartlang.org>"
+homepage: https://github.com/dart-lang/
+description: Safe DOM templating
+version: 0.0.1
+dependencies:
+  safe_dom:
+    git: git://github.com/blois/safe-dom.git
+dev_dependencies:
+  unittest: ">=0.4.5"
+  browser: any
+environment:
+  sdk: ">=0.4.6"
