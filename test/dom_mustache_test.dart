@@ -239,4 +239,10 @@ main() {
     result = template.render({'foo': true});
     validate(result, parse('<span>true</span>'));
   });
+
+  test('comments', () {
+    var template = new Template.fromHtml('<span>{{!ignored}}</span>');
+    var result = template.render({'ignored': true});
+    validate(result, parse('<span></span>'));
+  });
 }

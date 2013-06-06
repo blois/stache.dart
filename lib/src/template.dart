@@ -235,7 +235,7 @@ class AttributeRenderer extends NodeRenderer {
 
     Element element = insertionPath.resolve(destination);
     var value = buffer.toString();
-    if (validator.allowsAttribute(element.tagName, attributeName, value)) {
+    if (validator.allowsAttribute(element, attributeName, value)) {
       element.attributes[attributeName] = value;
     }
   }

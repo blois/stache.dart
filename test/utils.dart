@@ -64,6 +64,6 @@ void normalizeTextNodes(Node node) {
  * Validator which accepts everything.
  */
 class NullValidator implements NodeValidator {
-  bool allowsElement(String tagName) => true;
-  bool allowsAttribute(String elementTagName, String name, String value) => true;
+  bool allowsElement(Element element) => true;
+  bool allowsAttribute(Element element, String name, String value) => true;
 }
