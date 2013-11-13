@@ -1,11 +1,8 @@
-name: dom_mustache
+name: stache
 author: "Dart Team <misc@dartlang.org>"
 homepage: https://github.com/dart-lang/
-description: Safe DOM templating
+description: Static DOM templating with Mustache syntax
 version: 0.0.1
-dependencies:
-  safe_dom:
-    git: git://github.com/blois/safe-dom.git
 dev_dependencies:
   unittest: ">=0.4.5"
   browser: any

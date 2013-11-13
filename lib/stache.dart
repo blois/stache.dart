@@ -2,12 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-library dom_mustache;
+library stache;
 
 import 'dart:html';
-import 'package:dom_mustache/src/template.dart';
-import 'package:safe_dom/validators.dart';
-import 'package:safe_dom/parser.dart' as parser;
+import 'package:stache/src/template.dart';
 
 abstract class Template {
   factory Template.fromHtml(String html,
@@ -19,7 +17,7 @@ abstract class Template {
       context = document.body;
     }
 
-    var fragment = parser.createFragment(context, html, validator: validator);
+    var fragment = context.createFragment(html, validator: validator);
     return new Template.fromFragment(fragment, validator: validator);
   }
 

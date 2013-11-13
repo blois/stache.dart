@@ -5,22 +5,47 @@
 library dom_mustache.test.utils;
 
 import 'dart:html';
-import 'package:safe_dom/validators.dart';
 import 'package:unittest/unittest.dart';
+
+void validate(Node a, Node b) {
+  var aHtml = nodeToHtml(a);
+  var bHtml = nodeToHtml(b);
+
+  normalizeTextNodes(a);
+  normalizeTextNodes(b);
+
+  validateNodes(a, b);
+}
+
+void validateToHtml(dom, html) {
+  var expectedDOM = parse(html);
+  // Serialize then re-parse, to avoid some parsing differences of the expected.
+  dom = parse(nodeToHtml(dom));
+  validate(dom, expectedDOM);
+}
+
+String nodeToHtml(Node node) {
+  var host = document.createElement('div');
+  host.append(node.clone(true));
+  return host.innerHtml;
+}
 
 
 /**
  * Validate that two DOM trees are equivalent.
  */
-void validate(Node a, Node b, [String path = '']) {
+void validateNodes(Node a, Node b, [String path = '']) {
   path = '${path}${a.runtimeType}';
   expect(a.nodeType, b.nodeType, reason: '$path nodeTypes differ');
-  expect(a.localName, b.localName, reason: '$path localNames differ');
-  expect(a.nodes.length, b.nodes.length, reason: '$path nodes.lengths differ');
-  expect(a.nodeValue, b.nodeValue, reason: '$path nodeValues differ');
-  expect(a.text, b.text, reason: '$path texts differ');
+  if (a.nodeType == Node.TEXT_NODE) {
+    expect(a.text.trim(), b.text.trim(), reason: '$path texts differ');
+  }
 
   if (a is Element) {
+    expect(a.localName, b.localName, reason: '$path localNames differ');
+    expect(a.nodes.length, b.nodes.length,
+        reason: '$path nodes.lengths differ');
+
     Element bE = b;
     expect(a.tagName, bE.tagName, reason: '$path tagNames differ');
     expect(a.attributes.length, bE.attributes.length,
@@ -31,7 +56,7 @@ void validate(Node a, Node b, [String path = '']) {
     }
   }
   for (var i = 0; i < a.nodes.length; ++i) {
-    validate(a.nodes[i], b.nodes[i], '$path[$i].');
+    validateNodes(a.nodes[i], b.nodes[i], '$path[$i].');
   }
 }
 
@@ -51,12 +76,31 @@ void normalizeTextNodes(Node node) {
         child.remove();
       }
     } else {
+      if (currentText != null && currentText.text == '') {
+        currentText.remove();
+      }
       currentText = null;
     }
     if (child is Element) {
       normalizeTextNodes(child);
     }
   }
+  if (currentText != null && currentText.text == '') {
+    currentText.remove();
+  }
+}
+
+DocumentFragment parse(String html) {
+  var range = new Range();
+  range.selectNode(document.body);
+
+  return range.createContextualFragment(html);
+}
+
+void compare(String template, String expected, data) {
+  var template = Template.fromHtml(template);
+  var result = template.render(data);
+  validate(result, parse(expected));
 }
 
 
