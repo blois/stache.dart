@@ -7,15 +7,15 @@ library js_tests;
 import 'dart:async';
 import 'dart:html';
 
-import 'package:stache/stache.dart';
+import 'package:mocha_style_test/mocha.dart';
 import 'package:stache/src/template.dart';
-import 'package:unittest/html_config.dart';
+import 'package:stache/stache.dart';
 import 'package:unittest/unittest.dart';
 
 import 'utils.dart';
 
 main() {
-  useHtmlConfiguration();
+  useMochaConfiguration();
 
   var noValidation = new NullValidator();
 

@@ -11,7 +11,7 @@ import 'dart:html';
 import 'dart:js' as js;
 
 import 'package:stache/stache.dart';
-import 'package:unittest/html_config.dart';
+import 'package:mocha_style_test/mocha.dart';
 import 'package:unittest/unittest.dart';
 
 import 'utils.dart';
@@ -72,7 +72,7 @@ var testNames = [
 ];
 
 main() {
-  useHtmlConfiguration();
+  useMochaConfiguration();
 
   for (var name in testNames) {
     test(name, () {
@@ -132,7 +132,7 @@ eval(String text) {
  * Wraps JS objects into Dart types to make all JS object act as maps in
  * Dart.
  */
-void wrapJsObjectIfNeeded(js.JsObject obj) {
+wrapJsObjectIfNeeded(obj) {
   if (obj is js.JsArray) {
     return new JsArrayList(obj);
   } else if (obj is js.JsFunction) {
@@ -152,7 +152,7 @@ class JsObjectMap implements Map<String, dynamic> {
   final js.JsObject _object;
   JsObjectMap(this._object);
 
-  V operator [](Object key) {
+  operator [](Object key) {
     return wrapJsObjectIfNeeded(_object[key]);
   }
 }
