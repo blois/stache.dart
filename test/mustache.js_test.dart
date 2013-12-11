@@ -72,8 +72,6 @@ var testNames = [
 ];
 
 main() {
-  useMochaConfiguration();
-
   for (var name in testNames) {
     test(name, () {
       return loadTest(name).then((data) {
@@ -96,20 +94,20 @@ Future<Map> loadTest(String name) {
 
   var requests = [];
 
-  requests.add(HttpRequest.getString('_files/$name.js').then((text) {
+  requests.add(HttpRequest.getString('base/test/_files/$name.js').then((text) {
     data['js'] = eval(text);
   }));
 
-  requests.add(HttpRequest.getString('_files/$name.mustache').then((text) {
+  requests.add(HttpRequest.getString('base/test/_files/$name.mustache').then((text) {
     data['mustache'] = text;
   }));
 
-  requests.add(HttpRequest.getString('_files/$name.txt').then((text) {
+  requests.add(HttpRequest.getString('base/test/_files/$name.txt').then((text) {
     data['text'] = text;
   }));
 
   if (name.startsWith('partial_')) {
-    requests.add(HttpRequest.getString('_files/$name.partial').then((text) {
+    requests.add(HttpRequest.getString('base/test/_files/$name.partial').then((text) {
       data['partial'] = text;
     }));
   }

@@ -6,6 +6,7 @@ version: 0.0.1
 dev_dependencies:
   unittest: ">=0.4.5"
   browser: any
+  js: ">=0.2.0 <0.3.0"
   mocha_style_test:
     git: git://github.com/blois/mocha_style_test.git
 environment:

@@ -15,8 +15,6 @@ import 'package:unittest/unittest.dart';
 import 'utils.dart';
 
 main() {
-  useMochaConfiguration();
-
   var noValidation = new NullValidator();
 
   test('no bindings', () {
